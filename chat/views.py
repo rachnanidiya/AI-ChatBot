@@ -1,10 +1,15 @@
-import requests
 import json
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+import google.generativeai as genai
 
-API_KEY = "YOUR_HUGGINGFACE_API_KEY"
+
+# add your API key here
+genai.configure(api_key="AIzaSyBZK0jlkTbGEsQJm53HkoQUMlZWQK7KSVI")
+
+model = genai.GenerativeModel("gemini-2.5-flash")
+
 
 def home(request):
     return render(request, "index.html")
@@ -18,20 +23,13 @@ def ask_ai(request):
         data = json.loads(request.body)
         message = data.get("message")
 
-        API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-large"
+        try:
+            response = model.generate_content(message)
+            reply = response.text
 
-        headers = {
-            "Authorization": f"Bearer {API_KEY}"
-        }
-
-        payload = {
-            "inputs": message
-        }
-
-        response = requests.post(API_URL, headers=headers, json=payload)
-
-        result = response.json()
-
-        reply = result[0]["generated_text"]
+        except Exception as e:
+            reply = str(e)
 
         return JsonResponse({"reply": reply})
+
+    return JsonResponse({"error": "Invalid request"})
