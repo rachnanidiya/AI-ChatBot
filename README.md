@@ -34,19 +34,24 @@ A full-stack AI chatbot built using Django with modern UI and real-time features
 git clone https://github.com/your-username/ai-chatbot.git
 cd ai-chatbot
 ```
+
 2. Create Virtual Environment
 ```python -m venv venv```
 ```venv\Scripts\activate ```  # Windows
-3. Install Dependencies
+
+4. Install Dependencies
 ```pip install -r requirements.txt```
-4. Add Environment Variables
+
+5. Add Environment Variables
 
 ```Create a .env file:```
-
 ```GEMINI_API_KEY=your_api_key_here```
+
 5. Run Migrations
 ```python manage.py migrate```
-6. Create Superuser
+
+7. Create Superuser
 ```python manage.py createsuperuser```
-7. Run Server
+
+9. Run Server
 ```python manage.py runserver```
